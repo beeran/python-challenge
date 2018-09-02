@@ -21,17 +21,18 @@ with open(source_csv, newline="") as csvfile:
             vote_result[row[2]] = 1
         else:
             vote_result[row[2]] = int(vote_result[row[2]]) +1
-   
+
 result.append(f'Election Results')
 result.append(f'------------------------------------------------------')
 result.append(f'Total Votes:   {len(total_votes)}')
 result.append(f'------------------------------------------------------')
 
 for candidate in vote_result.keys():
-    #print(candidate + ":" + "{:.2%}".format((vote_result[candidate])/(len(total_votes))) + vote_result[candidate])
-    result.append(f'{candidate} : {(vote_result[candidate])/(len(total_votes))} {vote_result[candidate]}')
+    percent = "{:.2%}".format((vote_result[candidate])/(len(total_votes)))
+    result.append(f'{candidate} : {percent} ({vote_result[candidate]})')
+
 result.append(f'------------------------------------------------------')
-result.append(f'Winner: ')
+result.append(f'Winner: {max(vote_result.keys(), key=(lambda k: vote_result[k]))}')
 result.append(f'------------------------------------------------------')
 [print(x) for x in result]
 with open('output.csv', mode='w', newline='') as summary:
